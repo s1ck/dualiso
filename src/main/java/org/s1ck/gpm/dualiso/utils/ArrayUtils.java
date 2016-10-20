@@ -5,48 +5,6 @@ import java.util.Random;
 
 public class ArrayUtils {
 
-  /**
-   * Main for benchmarking
-   **/
-  public static void main(String[] args) {
-    Random random = new Random();
-    int[] first = new int[100000];
-    int[] second = new int[100000];
-    for (int i = 0; i < first.length; i++) {
-      first[i] = random.nextInt(Integer.MAX_VALUE);
-    }
-    for (int i = 0; i < second.length; i++) {
-      second[i] = random.nextInt(Integer.MAX_VALUE);
-    }
-    Arrays.sort(first);
-    Arrays.sort(second);
-    sortedContains(first, 1, 10);
-        /*
-        long start = System.currentTimeMillis();
-        int[] normal = intersect(first, second);
-        System.out.println(System.currentTimeMillis() - start);
-        start = System.currentTimeMillis();
-        int[] improved = sortedIntersect(first, second);
-        System.out.println(System.currentTimeMillis() - start);
-        for (int aNormal : normal) {
-            if (!contains(improved, aNormal)) {
-                System.out.println("FEHLER!");
-            }
-        }
-        */
-        /*long start = System.currentTimeMillis();
-        int[] normal = union(first, second);
-        System.out.println(System.currentTimeMillis() - start);
-        start = System.currentTimeMillis();
-        int[] improved = sortedUnion(first, second);
-        System.out.println(System.currentTimeMillis() - start);
-        for (int aNormal : normal) {
-            if (!contains(improved, aNormal)) {
-                System.out.println("FEHLER!");
-            }
-        }*/
-  }
-
   public static int[] union(int[] f1, int[] f2) {
     int[] accumulator = new int[f1.length + f2.length];
     int count = 0;
