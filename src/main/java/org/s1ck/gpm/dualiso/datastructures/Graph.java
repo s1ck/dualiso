@@ -1,6 +1,5 @@
 package org.s1ck.gpm.dualiso.datastructures;
 
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.primitives.Ints;

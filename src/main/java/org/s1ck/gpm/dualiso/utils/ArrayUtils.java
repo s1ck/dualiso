@@ -1,7 +1,6 @@
 package org.s1ck.gpm.dualiso.utils;
 
 import java.util.Arrays;
-import java.util.Random;
 
 public class ArrayUtils {
 
@@ -10,13 +9,13 @@ public class ArrayUtils {
     int count = 0;
 
     for (int e : f1) {
-      if (!sortedContains(accumulator, e, count)) {
+      if (!contains(accumulator, e, count)) {
         accumulator[count++] = e;
       }
     }
 
     for (int e : f2) {
-      if (!sortedContains(accumulator, e, count)) {
+      if (!contains(accumulator, e, count)) {
         accumulator[count++] = e;
       }
     }
@@ -24,7 +23,7 @@ public class ArrayUtils {
     return Arrays.copyOfRange(accumulator, 0, count);
   }
 
-  public static int[] sortedUnion(int[] f1, int[] f2) {
+  public static int[] unionSorted(int[] f1, int[] f2) {
 
     int i = 0;
     int j = 0;
@@ -79,7 +78,7 @@ public class ArrayUtils {
     return Arrays.copyOfRange(accumulator, 0, count);
   }
 
-  public static int[] sortedIntersect(int[] f1, int[] f2) {
+  public static int[] intersectSorted(int[] f1, int[] f2) {
     int[] accumulator = new int[Math.min(f1.length, f2.length)];
     int count = 0;
     int i = 0;
@@ -131,7 +130,7 @@ public class ArrayUtils {
     return res;
   }
 
-  public static boolean sortedDoIntersect(int[] f1, int[] f2) {
+  public static boolean doIntersectSorted(int[] f1, int[] f2) {
     int i = 0;
     int j = 0;
     while (i < f1.length && j < f2.length) {
@@ -163,11 +162,11 @@ public class ArrayUtils {
     return res;
   }
 
-  public static boolean sortedContains(int[] f, int e) {
-    return sortedContains(f, e, f.length);
+  public static boolean containsSorted(int[] f, int e) {
+    return containsSorted(f, e, f.length);
   }
 
-  public static boolean sortedContains(int[] f, int e, int cnt) {
+  public static boolean containsSorted(int[] f, int e, int cnt) {
     int lo = 0;
     int hi = Math.min(f.length, cnt) - 1;
     while (lo <= hi) {
@@ -200,16 +199,16 @@ public class ArrayUtils {
     return res;
   }
 
-  public static boolean sortedContains(int[][] f, int e) {
-    return sortedContains(f, e, f.length);
+  public static boolean containsSorted(int[][] f, int e) {
+    return containsSorted(f, e, f.length);
   }
 
-  public static boolean sortedContains(int[][] f, int e, int row) {
+  public static boolean containsSorted(int[][] f, int e, int row) {
     boolean res = false;
     int bound = Math.min(f.length - 1, row);
 
     for (int i = 0; i <= bound; i++) {
-      if (sortedContains(f[i], e)) {
+      if (containsSorted(f[i], e)) {
         res = true;
         break;
       }
@@ -229,5 +228,4 @@ public class ArrayUtils {
   public static boolean isEmpty(int[][] f) {
     return f.length == 0;
   }
-
 }

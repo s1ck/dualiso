@@ -3,7 +3,7 @@ package org.s1ck.gpm.dualiso.simulation;
 import org.s1ck.gpm.dualiso.datastructures.Graph;
 
 import static org.apache.commons.lang3.ArrayUtils.removeElement;
-import static org.s1ck.gpm.dualiso.utils.ArrayUtils.sortedDoIntersect;
+import static org.s1ck.gpm.dualiso.utils.ArrayUtils.doIntersectSorted;
 
 /**
  * Checks if each candidate in the database graph has appropriate children
@@ -25,8 +25,7 @@ public class SimpleSimulation implements SimulationMethod {
           // for each candidate of u_Q (u_G)
           for (int u_G : candidates[u_Q]) {
             // check if an edge exists in the database
-            if (!sortedDoIntersect(database.getNeighbors(u_G),
-              candidates[v_Q])) {
+            if (!doIntersectSorted(database.getNeighbors(u_G), candidates[v_Q])) {
               // if not, remove candidates from cand(u_Q)
               candidates[u_Q] = removeElement(candidates[u_Q], u_G);
               // if no candidate is left for u_Q, there is no embedding

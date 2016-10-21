@@ -3,7 +3,8 @@ package org.s1ck.gpm.dualiso.simulation;
 import org.apache.commons.lang3.ArrayUtils;
 import org.s1ck.gpm.dualiso.datastructures.Graph;
 
-import static org.s1ck.gpm.dualiso.utils.ArrayUtils.*;
+import static org.s1ck.gpm.dualiso.utils.ArrayUtils.intersectSorted;
+import static org.s1ck.gpm.dualiso.utils.ArrayUtils.unionSorted;
 
 /**
  * Checks if each candidate in the database graph has appropriate children
@@ -27,7 +28,7 @@ public class DualSimulation implements SimulationMethod {
           // for each candidate of u_Q (u_G)
           for (int u_G : candidates[u_Q]) {
             int[] intersect =
-              sortedIntersect(g.getNeighbors(u_G), candidates[v_Q]);
+              intersectSorted(g.getNeighbors(u_G), candidates[v_Q]);
             // check if edge exists in the database
             if (intersect.length == 0) {
               // if not, remove candidates from cand(u_Q)
@@ -39,7 +40,7 @@ public class DualSimulation implements SimulationMethod {
               changed = true;
             }
             // update valid candidates for v_Q
-            v_Q_candidates = sortedUnion(v_Q_candidates, intersect);
+            v_Q_candidates = unionSorted(v_Q_candidates, intersect);
           }
           // if no candidates for v_Q, there is no embedding
           if (v_Q_candidates.length == 0) {
@@ -49,7 +50,7 @@ public class DualSimulation implements SimulationMethod {
           if (v_Q_candidates.length < candidates[v_Q].length) {
             changed = true;
           }
-          candidates[v_Q] = sortedIntersect(candidates[v_Q], v_Q_candidates);
+          candidates[v_Q] = intersectSorted(candidates[v_Q], v_Q_candidates);
         }
       }
     }
