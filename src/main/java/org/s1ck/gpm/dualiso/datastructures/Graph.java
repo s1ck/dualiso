@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.primitives.Ints;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -20,8 +21,12 @@ public class Graph {
 
   public Graph(int[][] adjacencyList, String[] labels) {
     this.adjacencyList = adjacencyList;
+    for (int i = 0; i < adjacencyList.length; i++) {
+      int[] line = adjacencyList[i];
+      Arrays.sort(line);
+      adjacencyList[i] = line;
+    }
     this.labels = labels;
-
     labelIdx = Maps.newHashMap();
     for (int i = 0; i < labels.length; i++) {
       String label = labels[i];

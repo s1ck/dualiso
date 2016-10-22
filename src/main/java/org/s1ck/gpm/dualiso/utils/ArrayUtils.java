@@ -23,6 +23,46 @@ public class ArrayUtils {
     return Arrays.copyOfRange(accumulator, 0, count);
   }
 
+  public static int[] unionSorted(int[] f1, int[] f2) {
+
+    int i = 0;
+    int j = 0;
+    int m = f1.length;
+    int n = f2.length;
+    int previous = -1;
+    int count = 0;
+    int[] accumulator = new int[m + n];
+    while (i < m && j < n) {
+      if (f1[i] < f2[j]) {
+        if (previous < f1[i]) {
+          previous = f1[i];
+          accumulator[count++] = previous;
+        }
+        i++;
+      } else if (f1[i] > f2[j]) {
+        if (previous < f2[j]) {
+          previous = f2[j];
+          accumulator[count++] = previous;
+        }
+        j++;
+      } else {
+        if (previous < f1[i]) {
+          previous = f1[i];
+          accumulator[count++] = previous;
+        }
+        i++;
+        j++;
+      }
+    }
+    while (i < m) {
+      accumulator[count++] = f1[i++];
+    }
+    while (j < n) {
+      accumulator[count++] = f2[j++];
+    }
+    return Arrays.copyOfRange(accumulator, 0, count);
+  }
+
   public static int[] intersect(int[] f1, int[] f2) {
     int[] accumulator = new int[Math.min(f1.length, f2.length)];
     int count = 0;
@@ -35,6 +75,30 @@ public class ArrayUtils {
       }
     }
 
+    return Arrays.copyOfRange(accumulator, 0, count);
+  }
+
+  public static int[] intersectSorted(int[] f1, int[] f2) {
+    int[] accumulator = new int[Math.min(f1.length, f2.length)];
+    int count = 0;
+    int i = 0;
+    int j = 0;
+    int m = f1.length;
+    int n = f2.length;
+    int previous = -1;
+    while (i < m && j < n) {
+      if (f1[i] < f2[j]) {
+        i++;
+      } else if (f1[i] > f2[j]) {
+        j++;
+      } else {
+        if (f1[i] != previous) {
+          accumulator[count++] = f1[i];
+        }
+        i++;
+        j++;
+      }
+    }
     return Arrays.copyOfRange(accumulator, 0, count);
   }
 
@@ -66,6 +130,21 @@ public class ArrayUtils {
     return res;
   }
 
+  public static boolean doIntersectSorted(int[] f1, int[] f2) {
+    int i = 0;
+    int j = 0;
+    while (i < f1.length && j < f2.length) {
+      if (f1[i] < f2[j]) {
+        i++;
+      } else if (f1[i] > f2[j]) {
+        j++;
+      } else {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public static boolean contains(int[] f, int e) {
     return contains(f, e, f.length);
   }
@@ -83,6 +162,26 @@ public class ArrayUtils {
     return res;
   }
 
+  public static boolean containsSorted(int[] f, int e) {
+    return containsSorted(f, e, f.length);
+  }
+
+  public static boolean containsSorted(int[] f, int e, int cnt) {
+    int lo = 0;
+    int hi = Math.min(f.length, cnt) - 1;
+    while (lo <= hi) {
+      int mid = lo + (hi - lo) / 2;
+      if (e < f[mid]) {
+        hi = mid - 1;
+      } else if (e > f[mid]) {
+        lo = mid + 1;
+      } else {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public static boolean contains(int[][] f, int e) {
     return contains(f, e, f.length);
   }
@@ -93,6 +192,23 @@ public class ArrayUtils {
 
     for (int i = 0; i <= bound; i++) {
       if (contains(f[i], e)) {
+        res = true;
+        break;
+      }
+    }
+    return res;
+  }
+
+  public static boolean containsSorted(int[][] f, int e) {
+    return containsSorted(f, e, f.length);
+  }
+
+  public static boolean containsSorted(int[][] f, int e, int row) {
+    boolean res = false;
+    int bound = Math.min(f.length - 1, row);
+
+    for (int i = 0; i <= bound; i++) {
+      if (containsSorted(f[i], e)) {
         res = true;
         break;
       }
